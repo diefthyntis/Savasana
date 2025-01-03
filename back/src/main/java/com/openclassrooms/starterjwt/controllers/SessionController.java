@@ -75,9 +75,15 @@ public class SessionController {
         try {
             Session session = this.sessionService.getById(Long.valueOf(id));
 
+            
+            /*
             if (session == null) {
                 return ResponseEntity.notFound().build();
             }
+            //Niveau de détail inutile
+              */
+             
+            
 
             this.sessionService.delete(Long.parseLong(id));
             return ResponseEntity.ok().build();

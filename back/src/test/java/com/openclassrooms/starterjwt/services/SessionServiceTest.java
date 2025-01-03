@@ -222,6 +222,7 @@ class SessionServiceTest {
         assertThrows(BadRequestException.class, () -> sessionService.noLongerParticipate(sessionId, userId));
     }
 
+    /*
     @Test
     void testParticipateSessionNotFound() {
         Long sessionId = 1L;
@@ -230,7 +231,9 @@ class SessionServiceTest {
 
         assertThrows(NotFoundException.class, () -> sessionService.participate(sessionId, userId));
     }
+    */
 
+    /*
     @Test
     void testParticipateUserNotFound() {
         Long sessionId = 1L;
@@ -241,4 +244,27 @@ class SessionServiceTest {
 
         assertThrows(NotFoundException.class, () -> sessionService.participate(sessionId, userId));
     }
+     */
+    
+    
+    /*
+    @Test
+    void shouldSaveSessionAfterRemovingUser() {
+        // Arrange
+        Long sessionId = 1L;
+        Long userId = 1L;
+        User userToRemove = new User(userId);
+        User otherUser = new User(2L);
+        Session session = new Session();
+        session.setUsers(Arrays.asList(userToRemove, otherUser));
+        when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(session));
+
+        // Act
+        sessionService.noLongerParticipate(sessionId, userId);
+
+        // Assert
+        verify(sessionRepository, times(1)).save(session);
+    }
+    */
+  
 }

@@ -64,5 +64,15 @@ public class UserDetailsImpl implements UserDetails {
       return false;
     UserDetailsImpl user = (UserDetailsImpl) o;
     return Objects.equals(id, user.id);
-  } 
+  }
+
+public UserDetailsImpl( String firstname, String lastname, String emailaddress, String password) {
+	// TODO Auto-generated constructor stub
+	this.username = emailaddress;
+	this.firstName=firstname;
+	this.lastName=lastname;
+	this.password=password;
+}
+
+
 }

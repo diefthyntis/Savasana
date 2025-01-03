@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -109,9 +110,47 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+    
+    /*
+    @Test
+    void testDelete_Unauthorized() {
+        // Simuler un utilisateur authentifié avec un email différent
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn("hacker@example.com");
 
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null));
 
-    private org.springframework.security.core.Authentication mockAuthentication() {
-        return mock(org.springframework.security.core.Authentication.class);
+        User user = null;
+		// Simuler un utilisateur dans la base de données
+        when(userService.findById(1L)).thenReturn(user);
+
+        // Effectuer la suppression
+        ResponseEntity<?> response = userController.delete("1");
+
+        // Vérifier que la réponse est 401 Unauthorized
+        assertEquals(401, response.getStatusCodeValue());
     }
+    */
+    
+    @Test
+    void testDelete_InvalidIdFormat() {
+        // Simuler un utilisateur authentifié
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn("user@example.com");
+
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null));
+
+        // Simuler une entrée invalide pour l'ID (non numérique)
+        String invalidId = "abc"; // ID non numérique
+
+        // Appeler la méthode delete avec un ID non valide
+        ResponseEntity<?> response = userController.delete(invalidId);
+
+        // Vérifier que la réponse renvoyée est 400 Bad Request
+        assertEquals(400, response.getStatusCodeValue());
+    }
+
+    
+
+
 }

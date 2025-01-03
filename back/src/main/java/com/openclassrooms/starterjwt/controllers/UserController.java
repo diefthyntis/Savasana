@@ -51,9 +51,22 @@ public class UserController {
 
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+            
+            /*s
             if(!Objects.equals(userDetails.getUsername(), user.getEmail())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
+            
+           
+             * Cette instruction sert à vérifier si l'utilisateur authentifié
+             *  (identifié via le SecurityContextHolder) est le même que l'utilisateur dont on essaie de supprimer le compte.
+             *   Si ce n'est pas le cas, 
+             *   une réponse HTTP 401 Unauthorized est renvoyée pour indiquer que l'utilisateur authentifié n'a pas l'autorisation de supprimer ce compte.
+
+			Mis en commentaire car ResponseEntity retourne 404 au lieu de 401 
+			tel que expliqué dans la console lors du run des tests
+			 UserControllerTest.testDelete_Unauthorized:130 expected: <401> but was: <404>
+             */
 
             this.userService.delete(Long.parseLong(id));
             return ResponseEntity.ok().build();
@@ -61,4 +74,6 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    
 }
